@@ -266,7 +266,8 @@ function withSecurityHeaders(response: Response): Response {
       "style-src 'self'",
       "img-src 'self' data:",
       "connect-src 'self'",
-      "frame-ancestors 'none'",
+      // Delib is the first-party station shell; all other framing stays blocked.
+      "frame-ancestors https://delib.mashbean.net",
       "base-uri 'none'",
       "form-action 'self'",
     ].join("; "),
