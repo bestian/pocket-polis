@@ -18,6 +18,13 @@ const pkg = JSON.parse(read("package.json"));
 const readme = read("README.md");
 
 describe("wrangler.jsonc", () => {
+  it("only allows the first-party Delib station to frame participant and host pages", () => {
+    const security = read("src/index.ts").match(/function withSecurityHeaders\(response: Response\)[\s\S]*?\n}/)?.[0];
+    expect(security).toBeDefined();
+    const framePolicy = security.match(/"frame-ancestors ([^"]+)"/)?.[1];
+    expect(framePolicy).toBe("https://delib.mashbean.net");
+  });
+
   it("worker 名稱與進入點", () => {
     expect(wrangler.name).toBe("polis-serverless");
     expect(wrangler.env.production.name).toBe(wrangler.name);
